@@ -46,7 +46,7 @@ td {
   vertical-align: middle;
   font-size: 50px;
   font-weight: bold;
-  border: 5px solid white; /* Weiße Trennlinien zwischen den Zellen */
+  border: 5px solid #ddd; /* Weiße Trennlinien zwischen den Zellen */
 }
 
 /* Entfernt den äußeren Rand der Tabelle */
@@ -68,5 +68,5 @@ table tr td:last-child {
 
 /* Hover-Effekt */
 td:hover {
-  background-color: #ddd;
+  background-color:rgba(255, 255, 255, 0.3);
 }

@@ -1,4 +1,3 @@
-// Dein "fields" Array
 let fields = [
   null,    // 0
   'circle',// 1
@@ -10,35 +9,76 @@ let fields = [
   null,    // 7
   null     // 8
 ];
-function init(){
+
+let currentPlayer = 'circle'; // Startspieler
+
+function init() {
   render();
 }
 
 // Funktion render() erzeugt das Spielfeld
 function render() {
-  // Zugriff auf den Div-Container
   const container = document.getElementById('content');
-
-  // Erstelle die Tabelle
   let tableHTML = '<table>';
 
-  // Gehe durch das Array und erstelle für jedes Feld eine Zeile und Spalte
   for (let i = 0; i < 3; i++) {
     tableHTML += '<tr>';
     for (let j = 0; j < 3; j++) {
       const index = i * 3 + j;
       let content = '';
+
       if (fields[index] === 'circle') {
-        content = 'O'; // 'O' für den Kreis
+        content = generateCircleSVG();
       } else if (fields[index] === 'cross') {
-        content = 'X'; // 'X' für das Kreuz
+        content = generateCrossSVG();
       }
-      tableHTML += `<td>${content}</td>`;
+
+      tableHTML += `<td onclick="handleClick(${index}, this)">${content}</td>`;
     }
     tableHTML += '</tr>';
   }
-  tableHTML += '</table>';
 
-  // Setze den HTML-Code der Tabelle in den Container
+  tableHTML += '</table>';
   container.innerHTML = tableHTML;
-};
+}
+
+// Funktion für das Klicken auf ein Feld
+function handleClick(index, cell) {
+  if (fields[index] === null) {
+    fields[index] = currentPlayer; // Setzt das aktuelle Symbol ins Array
+    cell.innerHTML = currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG(); // Fügt SVG ein
+    cell.onclick = null; // Entfernt das onclick-Event
+    currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle'; // Wechselt den Spieler
+  }
+}
+
+function generateCircleSVG() {
+  return `
+    <svg width="70" height="70" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="30" stroke="#00B0ef" stroke-width="8" fill="none"
+        stroke-dasharray="188.4" stroke-dashoffset="188.4"
+        transform="scale(0.5)" transform-origin="50% 50%">
+        
+        <animate attributeName="stroke-dashoffset" from="188.4" to="0" dur="500ms" fill="freeze" />
+        <animateTransform attributeName="transform" type="scale" from="0.5" to="1" dur="500ms" fill="freeze"/>
+      </circle>
+    </svg>
+  `;
+}
+document.getElementById("content").innerHTML = generateCircleSVG();
+
+function generateCrossSVG() {
+  return `
+    <svg width="70" height="70" viewBox="0 0 100 100">
+      <line x1="20" y1="20" x2="80" y2="80" stroke="#FFC000" stroke-width="10" stroke-linecap="round"
+        stroke-dasharray="84.85" stroke-dashoffset="84.85">
+        <animate attributeName="stroke-dashoffset" from="84.85" to="0" dur="400ms" fill="freeze" />
+      </line>
+      <line x1="80" y1="20" x2="20" y2="80" stroke="#FFC000" stroke-width="10" stroke-linecap="round"
+        stroke-dasharray="84.85" stroke-dashoffset="84.85">
+        <animate attributeName="stroke-dashoffset" from="84.85" to="0" dur="400ms" fill="freeze" />
+      </line>
+    </svg>
+  `;
+}
+document.getElementById("content").innerHTML = generateCrossSVG();
