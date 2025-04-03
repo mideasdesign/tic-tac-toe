@@ -70,3 +70,19 @@ table tr td:last-child {
 td:hover {
   background-color:rgba(255, 255, 255, 0.3);
 }
+.center{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+.btn{
+  padding:8px 11px;
+  background:#ddd;
+  color:#323232;
+  border: 0px solid #ddd;
+  border-radius: 10px;
+  &:hover{
+    background: #959595;
+  }
+}
